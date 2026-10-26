@@ -1,0 +1,16 @@
+{
+  "name": "mundo-senai-rpg-v2",
+  "version": "2.0.0",
+  "description": "RPG de detetive - investigacao orgânica (sem código, sem respostas prontas) - Mundo SENAI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["rpg", "detetive", "senai", "node", "express", "investigacao"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -134,3 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Dados gerados em tempo de execução (mundo-senai RPG)
+/data/
+!data/.gitkeep
+/v2/data/
+!v2/data/.gitkeep

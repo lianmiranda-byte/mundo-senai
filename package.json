@@ -1,0 +1,16 @@
+{
+  "name": "mundo-senai-rpg",
+  "version": "1.0.0",
+  "description": "RPG de mesa de detetive - Mundo SENAI (Desenvolvimento de Sistemas)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["rpg", "detetive", "senai", "node", "express"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

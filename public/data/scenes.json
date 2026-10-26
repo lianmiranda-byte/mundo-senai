@@ -1,0 +1,166 @@
+{
+  "title": "Arquivo Morto",
+  "intro": "Uma delegacia. Meia-noite. Os arquivos queimam em silencio. Voce e o detetive chamado para descobrir quem apagou a verdade.",
+  "skills": ["Investigacao", "Percepcao", "Intuicao", "Persuasao", "Tecnologia", "Furtividade", "Forca", "Carisma"],
+  "characters": {
+    "delegado": { "name": "Delegado", "role": "Chefe da delegacia", "color": "#8b1a1a" },
+    "escrivao": { "name": "Escrivao", "role": "Responsavel pelos registros", "color": "#5a5a5a" },
+    "silva": { "name": "Detetive Silva", "role": "Investigadora interna", "color": "#2c5a7a" },
+    "ti": { "name": "Tecnico de TI", "role": "Sistemas e cameras", "color": "#2c6a4a" },
+    "faxineiro": { "name": "Faxineiro", "role": "Testemunha ocular", "color": "#6a5a2c" }
+  },
+  "scenes": [
+    {
+      "id": "s0_intro",
+      "title": "Chegada",
+      "light": "off",
+      "character": null,
+      "text": "A delegacia esta vazia. As luzes falharam. So o brilho da sua lanterna corta a escuridao. No chao, marcas de sapatos recentes levam ao arquivo. O cheiro de papel queimado ainda paira no ar.",
+      "choices": [
+        { "label": "Seguir as marcas ate o arquivo", "skill": "Percepcao", "dc": 8, "next": "s1_hall", "clue": "marcas_sapato" },
+        { "label": "Examinar a entrada primeiro", "skill": "Investigacao", "dc": 8, "next": "s1_hall", "clue": "entrada_forcada" }
+      ]
+    },
+    {
+      "id": "s1_hall",
+      "title": "Corredor",
+      "light": "off",
+      "character": null,
+      "text": "O corredor esta escuro. Portas fechadas. Uma delas tem arranhoes recentes, como se algo tivesse sido arrastado. Um extintor esta fora do lugar.",
+      "choices": [
+        { "label": "Forcar a porta arranhada", "skill": "Forca", "dc": 9, "next": "s2_archive", "clue": "porta_aberta" },
+        { "label": "Procurar outra entrada", "skill": "Furtividade", "dc": 8, "next": "s2_archive", "clue": "entrada_alternativa" }
+      ]
+    },
+    {
+      "id": "s2_archive",
+      "title": "Arquivo",
+      "light": "flicker",
+      "character": null,
+      "text": "Estantes tombadas. Pastas espalhadas. Um monte de cinzas no centro da sala. Alguns documentos sobreviveram, queimados nas bordas. Um cofre de aco esta entreaberto.",
+      "choices": [
+        { "label": "Examinar as cinzas", "skill": "Investigacao", "dc": 9, "next": "s3_burned", "clue": "cinzas_recentes" },
+        { "label": "Tentar abrir o cofre antigo", "skill": "Tecnologia", "dc": 10, "puzzle": "safeCracker", "next": "s3_burned", "clue": "cofre_aberto" },
+        { "label": "Ler documentos sobreviventes", "skill": "Percepcao", "dc": 8, "next": "s3_burned", "clue": "docs_sobreviventes" }
+      ]
+    },
+    {
+      "id": "s3_burned",
+      "title": "O Que Queimou",
+      "light": "flicker",
+      "character": null,
+      "text": "Entre as cinzas, restos de um livro-razao e uma lista de nomes. Alguns nomes foram riscados com caneta vermelha. Um pendrive derretido repousa perto do extintor.",
+      "choices": [
+        { "label": "Juntar os pedaços do documento", "skill": "Tecnologia", "dc": 11, "puzzle": "documentReconstruction", "next": "s4_suspects", "clue": "pendrive_dados" },
+        { "label": "Decifrar os nomes riscados", "skill": "Intuicao", "dc": 9, "next": "s4_suspects", "clue": "nomes_riscados" }
+      ]
+    },
+    {
+      "id": "s4_suspects",
+      "title": "Suspeitos",
+      "light": "steady",
+      "character": null,
+      "text": "Cinco pessoas tinham acesso ao arquivo a noite: o Delegado, o Escrivao, a Detetive Silva, o Tecnico de TI e o Faxineiro. Quem voce interroga?",
+      "choices": [
+        { "label": "Interrogar o Delegado", "skill": "Persuasao", "dc": 9, "next": "s5_delegado", "clue": null },
+        { "label": "Interrogar o Escrivao", "skill": "Intuicao", "dc": 8, "next": "s6_escrivao", "clue": null },
+        { "label": "Interrogar a Detetive Silva", "skill": "Carisma", "dc": 9, "next": "s7_silva", "clue": null },
+        { "label": "Conversar com o Tecnico de TI", "skill": "Tecnologia", "dc": 9, "puzzle": "cameraSchedule", "next": "s8_ti", "clue": null },
+        { "label": "Interrogar o Faxineiro", "skill": "Persuasao", "dc": 7, "next": "s9_faxineiro", "clue": null },
+        { "label": "Ja tenho o suficiente. Ir para analise final.", "skill": "Investigacao", "dc": 6, "next": "s10_evidence", "clue": null }
+      ]
+    },
+    {
+      "id": "s5_delegado",
+      "title": "Delegado",
+      "light": "steady",
+      "character": "delegado",
+      "text": "O Delegado nega tudo. Diz que estava em casa. Mas ha um cheiro de fumaca em sua jaqueta e suas maos tremem. Ele menciona 'proteger a instituicao'.",
+      "choices": [
+        { "label": "Pressionar o Delegado", "skill": "Persuasao", "dc": 10, "next": "s4_suspects", "clue": "delegado_nervoso" },
+        { "label": "Observar seu comportamento", "skill": "Percepcao", "dc": 8, "next": "s4_suspects", "clue": "delegado_fumaca" },
+        { "label": "Voltar a lista de suspeitos", "skill": "Investigacao", "dc": 6, "next": "s4_suspects", "clue": null }
+      ]
+    },
+    {
+      "id": "s6_escrivao",
+      "title": "Escrivao",
+      "light": "steady",
+      "character": "escrivao",
+      "text": "O Escrivao chora. Afirma que apenas cumpriu ordens. Diz que alguem mandou queimar 'os arquivos do caso 23'. Nao revela quem abertamente.",
+      "choices": [
+        { "label": "Acalmar e extrair mais", "skill": "Carisma", "dc": 8, "next": "s4_suspects", "clue": "caso_23" },
+        { "label": "Duvidar da historia", "skill": "Intuicao", "dc": 9, "next": "s4_suspects", "clue": "escrivao_medo" },
+        { "label": "Voltar a lista de suspeitos", "skill": "Investigacao", "dc": 6, "next": "s4_suspects", "clue": null }
+      ]
+    },
+    {
+      "id": "s7_silva",
+      "title": "Detetive Silva",
+      "light": "steady",
+      "character": "silva",
+      "text": "Silva sorri. Diz que investigava corrupcao interna e que os arquivos queimados eram a prova. Acusa o Delegado. Tem um bilhete anonimo em seu bolso.",
+      "choices": [
+        { "label": "Examinar o bilhete", "skill": "Percepcao", "dc": 8, "next": "s4_suspects", "clue": "bilhete_anonimo" },
+        { "label": "Confrontar sobre a acusacao", "skill": "Persuasao", "dc": 9, "next": "s4_suspects", "clue": "silva_acusacao" },
+        { "label": "Voltar a lista de suspeitos", "skill": "Investigacao", "dc": 6, "next": "s4_suspects", "clue": null }
+      ]
+    },
+    {
+      "id": "s8_ti",
+      "title": "Tecnico de TI",
+      "light": "steady",
+      "character": "ti",
+      "text": "O Tecnico diz que o sistema de cameras foi desligado as 23h. Alguem usou sua senha. Ele suspeita que foi o Delegado, mas nao tem certeza.",
+      "choices": [
+        { "label": "Perguntar sobre as cameras", "skill": "Tecnologia", "dc": 9, "puzzle": "cameraSchedule", "next": "s4_suspects", "clue": "logs_cameras" },
+        { "label": "Perguntar sobre a senha", "skill": "Intuicao", "dc": 8, "next": "s4_suspects", "clue": "senha_usada" },
+        { "label": "Voltar a lista de suspeitos", "skill": "Investigacao", "dc": 6, "next": "s4_suspects", "clue": null }
+      ]
+    },
+    {
+      "id": "s9_faxineiro",
+      "title": "Faxineiro",
+      "light": "steady",
+      "character": "faxineiro",
+      "text": "O Faxineiro viu tudo. Diz que o Delegado entrou no arquivo com um galao de combustivel. Mas esta com medo de represalias.",
+      "choices": [
+        { "label": "Garantir protecao", "skill": "Carisma", "dc": 7, "next": "s4_suspects", "clue": "faxineiro_testemunha" },
+        { "label": "Pedir detalhes", "skill": "Investigacao", "dc": 7, "next": "s4_suspects", "clue": "faxineiro_detalhes" },
+        { "label": "Voltar a lista de suspeitos", "skill": "Investigacao", "dc": 6, "next": "s4_suspects", "clue": null }
+      ]
+    },
+    {
+      "id": "s10_evidence",
+      "title": "Analise",
+      "light": "steady",
+      "character": null,
+      "text": "Voce reune as pistas coletadas. O quadro se forma: arquivos do caso 23, corrupcao interna, cameras desligadas. Quem e o culpado?",
+      "choices": [
+        { "label": "Acusar o Delegado", "skill": "Persuasao", "dc": 8, "next": "s11_accuse", "clue": "acusacao_delegado" },
+        { "label": "Acusar a Detetive Silva", "skill": "Intuicao", "dc": 8, "next": "s11_accuse", "clue": "acusacao_silva" },
+        { "label": "Acusar o Tecnico de TI", "skill": "Tecnologia", "dc": 8, "next": "s11_accuse", "clue": "acusacao_ti" },
+        { "label": "Acusar o Escrivao", "skill": "Intuicao", "dc": 8, "next": "s11_accuse", "clue": "acusacao_escrivao" },
+        { "label": "Acusar o Faxineiro", "skill": "Investigacao", "dc": 8, "next": "s11_accuse", "clue": "acusacao_faxineiro" }
+      ]
+    },
+    {
+      "id": "s11_accuse",
+      "title": "Confronto",
+      "light": "flicker",
+      "character": null,
+      "text": "Voce apresenta as evidencias. O silencio toma a sala. A verdade vem a tona, pesada como fumaca.",
+      "choices": [
+        { "label": "Ver resultado final", "skill": "Investigacao", "dc": 6, "next": "s12_ending", "clue": null }
+      ]
+    },
+    {
+      "id": "s12_ending",
+      "title": "Fim",
+      "light": "steady",
+      "character": null,
+      "text": "O caso se encerra. A verdade sobre os arquivos queimados e revelada. Obrigado por jogar, detetive. Sua coragem iluminou a escuridao.",
+      "choices": []
+    }
+  ]
+}

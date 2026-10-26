@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mundo SENAI RPG v2 - Painel do Evento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card-bg: rgba(22, 24, 30, 0.9);
+      --border: rgba(244, 239, 228, 0.12);
+      --accent: #a31515;
+      --accent-bright: #e63946;
+      --green: #2a9d8f;
+      --yellow: #e9c46a;
+      --fg: #d9d4c8;
+      --muted: #8a8578;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 2rem;
+      background: var(--bg); color: var(--fg);
+      font-family: 'Courier Prime', monospace;
+      min-height: 100vh;
+    }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 2px solid var(--accent); padding-bottom: 1rem; margin-bottom: 2rem;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0;
+      color: #fff; letter-spacing: 0.15rem;
+    }
+    .controls { display: flex; gap: 0.8rem; align-items: center; }
+    button, .btn {
+      padding: 0.6rem 1.2rem; background: var(--accent); color: #fff;
+      border: 1px solid var(--border); font-family: inherit; font-weight: bold;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.08rem;
+      transition: background 0.2s;
+    }
+    button:hover, .btn:hover { background: var(--accent-bright); }
+    .btn-secondary { background: #2a2d34; }
+    .btn-secondary:hover { background: #3d414b; }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem; margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-top: 3px solid var(--accent); padding: 1.2rem; text-align: center;
+    }
+    .stat-val { font-size: 2.4rem; font-weight: bold; color: #fff; margin-top: 0.4rem; }
+    .stat-lbl { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1rem; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif; font-size: 1.4rem;
+      margin: 1.5rem 0 1rem; color: #fff; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; background: var(--card-bg);
+      border: 1px solid var(--border); font-size: 0.85rem; margin-bottom: 2rem;
+    }
+    th, td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: rgba(0,0,0,0.5); color: var(--muted); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1rem; }
+    tr:hover { background: rgba(255,255,255,0.03); }
+
+    .badge {
+      padding: 0.2rem 0.5rem; font-size: 0.75rem; font-weight: bold;
+      border-radius: 2px; text-transform: uppercase; display: inline-block;
+    }
+    .badge-success { background: rgba(42, 157, 143, 0.25); color: #2a9d8f; border: 1px solid #2a9d8f; }
+    .badge-warning { background: rgba(233, 196, 106, 0.25); color: #e9c46a; border: 1px solid #e9c46a; }
+    .badge-danger { background: rgba(230, 57, 70, 0.25); color: #e63946; border: 1px solid #e63946; }
+    .badge-neutral { background: rgba(138, 133, 120, 0.25); color: #8a8578; border: 1px solid #8a8578; }
+
+    .live-indicator {
+      display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--green);
+    }
+    .dot {
+      width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>PAINEL MUNDO SENAI v2</h1>
+      <div style="font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem;">
+        Monitoramento em tempo real do RPG de Detetive
+      </div>
+    </div>
+    <div class="controls">
+      <span class="live-indicator"><span class="dot"></span> AO VIVO</span>
+      <button id="refreshBtn" class="btn-secondary">Atualizar</button>
+      <a href="/api/export/csv" class="btn" target="_blank">Exportar CSV</a>
+      <a href="/" class="btn-secondary" target="_blank">Abrir Jogo</a>
+    </div>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-lbl">Jogadores Registrados</div>
+      <div class="stat-val" id="totalPlayers">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Partidas Finalizadas</div>
+      <div class="stat-val" id="totalGames">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Casos Resolvidos</div>
+      <div class="stat-val" id="solvedCount" style="color: #2a9d8f;">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Taxa de Sucesso</div>
+      <div class="stat-val" id="successRate" style="color: #e9c46a;">0%</div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>Últimas Partidas Concluídas</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Horário</th>
+        <th>Jogador</th>
+        <th>Acusação</th>
+        <th>Resultado</th>
+        <th>Obs.</th>
+        <th>Anot.</th>
+        <th>Pontos</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody id="gamesTable">
+      <tr><td colspan="8" style="text-align: center; color: var(--muted);">Carregando dados...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    async function fetchStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+
+        document.getElementById('totalPlayers').textContent = data.totalPlayers || 0;
+        document.getElementById('totalGames').textContent = data.totalGames || 0;
+        document.getElementById('solvedCount').textContent = data.solvedCount || 0;
+
+        const rate = data.totalGames > 0 ? Math.round((data.solvedCount / data.totalGames) * 100) : 0;
+        document.getElementById('successRate').textContent = rate + '%';
+
+        const tbody = document.getElementById('gamesTable');
+        if (!data.recentGames || data.recentGames.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--muted);">Nenhuma partida concluída ainda.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.recentGames.map(g => {
+          const date = new Date(g.date).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+          let badgeClass = 'badge-danger';
+          if (g.resultTitle === 'CASO RESOLVIDO') badgeClass = 'badge-success';
+          else if (g.resultTitle === 'VERDADE PARCIAL') badgeClass = 'badge-warning';
+          else if (g.resultTitle === 'CASO INCONCLUSIVO') badgeClass = 'badge-neutral';
+
+          return `
+            <tr>
+              <td style="color: var(--muted);">${date}</td>
+              <td><strong>${escapeHtml(g.name)}</strong></td>
+              <td>${escapeHtml(g.accused || '-')}</td>
+              <td><span class="badge ${badgeClass}">${escapeHtml(g.resultTitle)}</span></td>
+              <td>${g.observationsCount || 0}</td>
+              <td>${g.notesCount || 0}</td>
+              <td>${g.score || 0}</td>
+              <td><strong>${escapeHtml(g.rank || 'C')}</strong></td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', fetchStats);
+    fetchStats();
+    setInterval(fetchStats, 5000);
+  </script>
+</body>
+</html>

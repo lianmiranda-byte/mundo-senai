@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquivo Morto - Jogo (Mundo SENAI)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-screen">
+  <div class="film-grain"></div>
+  <div class="vignette"></div>
+  <div class="blinds"></div>
+  <div class="fog"></div>
+  <div class="room-light" id="roomLight"></div>
+  <div class="flashlight"></div>
+  <div class="scene-fade" id="sceneFade"></div>
+  <div class="character-layer" id="characterLayer"></div>
+
+  <header class="hud">
+    <div class="hud-left">
+      <span id="playerLabel">Detetive</span>
+    </div>
+    <div class="hud-center">
+      <span id="timerLabel">TEMPO: 35S</span>
+    </div>
+    <div class="hud-right">
+      <button id="notebookBtn" class="hud-btn" title="Abrir Caderno de Campo">📓 CAMPO</button>
+      <button id="audioBtn" class="hud-btn" title="Ativar/Desativar Som">🔊 SOM</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="card">
+      <h2 id="sceneTitle"></h2>
+      <div id="sceneText" class="scene-text"></div>
+      <div id="rollResult" class="roll-result"></div>
+      <div id="choices" class="choices"></div>
+    </div>
+  </main>
+
+  <div id="dice" class="dice" aria-hidden="true"></div>
+
+  <!-- Caderno de Campo Modal -->
+  <div id="notebookModal" class="notebook-modal hidden">
+    <div class="notebook-card">
+      <div class="notebook-header">
+        <h2>CADRENO DE CAMPO</h2>
+        <button id="closeNotebookBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="notebook-content">
+        <div id="notebookObservations" class="notebook-section">
+          <h3>OBSERVACOES COLETADAS</h3>
+          <div id="observationsList">Nenhuma observacao ainda...</div>
+        </div>
+        <div id="notebookNotes" class="notebook-section">
+          <h3>SUAS ANATOCOES</h3>
+          <textarea id="playerNotes" placeholder="Escreva suas teorias, suspeitas e conexoes..."></textarea>
+          <div class="notes-footer">
+            <span id="notesCount">0 caracteres</span>
+          </div>
+        </div>
+      </div>
+      <div class="notebook-actions">
+        <button id="closeNotebookBtn2" class="close-modal">FECHAR CADRENO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de acusacao final -->
+  <div id="accuseModal" class="notebook-modal hidden">
+    <div class="notebook-card" style="max-width: 420px;">
+      <div class="notebook-header">
+        <h2>ACUSAÇAO FINAL</h2>
+        <button id="closeAccuseBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="notebook-content">
+        <p class="accuse-instruction">Em quem voce acredita que e o culpado? Digite o nome livremente:</p>
+        <input type="text" id="accuseName" maxlength="30" placeholder="Ex: Delegado" autocomplete="off" />
+        <div class="accuse-hint" id="accuseHint"></div>
+        <div class="accuse-actions">
+          <button id="submitAccuseBtn">REGISTRAR ACUSAÇAO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ending" class="ending hidden">
+    <div class="ending-card">
+      <div class="ending-badge" id="endingRank">RANK A</div>
+      <h2 id="endingTitle"></h2>
+      <p id="endingText"></p>
+      <div class="ending-actions">
+        <button id="restartBtn">Jogar Novamente</button>
+        <a href="/admin" class="admin-link" target="_blank">Ver Painel do Evento</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

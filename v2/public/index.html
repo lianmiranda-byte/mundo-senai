@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquivo Morto - Jogo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="name-screen">
+  <div class="film-grain"></div>
+  <div class="vignette"></div>
+  <div class="blinds"></div>
+  <div class="fog"></div>
+  <div class="room-light"></div>
+  <div class="flashlight"></div>
+  <main class="name-card">
+    <h1 class="title">ARQUIVO MORTO</h1>
+    <p class="subtitle">Um caso de detetive na escuridao</p>
+    <form id="nameForm">
+      <label for="playerName">Seu nome, detetive:</label>
+      <input id="playerName" type="text" maxlength="24" placeholder="Digite seu nome..." required autocomplete="off" />
+      <button type="submit">Entrar na delegacia</button>
+    </form>
+    <p class="hint">Jogo de investigacao. Nenhum conhecimento de programacao necessario. Voe decide quem acusar.</p>
+  </main>
+  <script src="js/name.js"></script>
+</body>
+</html>
